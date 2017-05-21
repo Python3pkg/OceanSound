@@ -17,7 +17,7 @@ def open_file(filename):
 
     # retrieve data SDS
     d = A.datasets()
-    sds_name = d.keys()[0]  # name of sds. Dictionary method.
+    sds_name = list(d.keys())[0]  # name of sds. Dictionary method.
     sds = A.select(sds_name)
     pin = A.attributes()
 

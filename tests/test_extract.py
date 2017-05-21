@@ -7,7 +7,7 @@ import shutil
 try:
     from urllib.request import urlretrieve
 except ImportError:
-    from urllib import urlretrieve
+    from urllib.request import urlretrieve
 
 import numpy as np
 import pytest

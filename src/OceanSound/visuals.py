@@ -70,11 +70,11 @@ def plot_animation(series, title, output, t_max):
         return marker,
 
     def animate(i):
-        print i
+        print(i)
         marker.set_data([i * (120. / frames)], marker.get_ydata())
         return marker,
 
-    print frames, INTERVAL, t_max
+    print(frames, INTERVAL, t_max)
     anim = animation.FuncAnimation(fig, animate, init_func=init,
                                    frames=frames, interval=INTERVAL, blit=False)
     #plt.show()

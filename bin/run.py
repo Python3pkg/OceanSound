@@ -52,7 +52,7 @@ def basemap_ui():
     return np.array((point[0],)), np.array((point[1],))
 
 def pos_command_line():
-    coords = raw_input('OceanSound> Input latitude and longitude: ')
+    coords = input('OceanSound> Input latitude and longitude: ')
     lat, lon = coords.strip('(').strip(')').split(',')
     LATLIMS = np.array([float(lat)])
     LONLIMS = np.array([float(lon)])
@@ -61,7 +61,7 @@ def pos_command_line():
 def do_calc(LATLIMS_AM, LONLIMS_AM, indir, outdir):
     land_checker = Basemap()
     if land_checker.is_land(LATLIMS_AM, LONLIMS_AM):
-        print 'SOS! Sorry you have selected a land pixel!'
+        print('SOS! Sorry you have selected a land pixel!')
         pygame.mixer.music.load('SOS.midi')
         pygame.mixer.music.play()
         while pygame.mixer.music.get_busy():
@@ -71,7 +71,7 @@ def do_calc(LATLIMS_AM, LONLIMS_AM, indir, outdir):
         dataAM = extract_series(LATLIMS_AM, LONLIMS_AM, indir)
         data_am = np.double(dataAM['Series'])
         if all(np.isnan(a) for a in data_am):
-            print 'THE SOUND OF SILENCE. Also, BATMAN. Everything is Rest and NaN'
+            print('THE SOUND OF SILENCE. Also, BATMAN. Everything is Rest and NaN')
             pygame.mixer.music.load('Batman_song.midi')
             pygame.mixer.music.play()
             while pygame.mixer.music.get_busy():
@@ -84,7 +84,7 @@ def do_calc(LATLIMS_AM, LONLIMS_AM, indir, outdir):
             pygame.mixer.music.load('Oc.midi')
             pygame.mixer.music.play()
             anim = plot_animation(data_am,
-                        (u'Music from Lat = %.2f Lon = %.2f'
+                        ('Music from Lat = %.2f Lon = %.2f'
                             % (dataAM['Lat'], dataAM['Lon'])),
                         'serie.png',
                         t_max=36000)#music.get_length())
@@ -123,6 +123,6 @@ if __name__ == "__main__":
         do_calc(LATLIMS_AM, LONLIMS_AM, indir, outdir)
 
         if args.mode in ('cmd', 'cv'):
-            command = raw_input('OceanSound> ')
+            command = input('OceanSound> ')
             if command == 'q':
                 RUNNING = False

@@ -23,7 +23,7 @@ def find_corners(b, color=Color.ORANGE, erode=3, circlet=.3, radius=10):
     binBlobs = balls.findBlobs(minsize=radius)
     corners = binBlobs.filter([blob.isCircle(circlet) for blob in binBlobs])
     binBlobs.show()
-    raw_input()
+    input()
     corners.show()
 
     return corners
@@ -39,7 +39,7 @@ def find_boat(b, color=Color.CRIMSON, erode=3, circlet=.3, radius=10):
     boat = binBlobs.filter([blob.isCircle(circlet) for blob in binBlobs])
     binBlobs.show()
     
-    print "boats", boat
+    print("boats", boat)
     return boat.sortArea()[0]
 
 
@@ -49,16 +49,16 @@ def distance(n1, n2):
     return np.math.sqrt((x1-x2)**2 + (y1-y2)**2)
 
 def topLeft(corners):
-    dists = map(partial(distance, (0,0)), corners)
+    dists = list(map(partial(distance, (0,0)), corners))
     return corners[np.argmin(dists)]
 
 def bottomRight(corners):
-    dists = map(partial(distance, (0,0)), corners)
+    dists = list(map(partial(distance, (0,0)), corners))
     return corners[np.argmax(dists)]
 
 def clockwise_corners(corners, img):
-    dists_origin = map(partial(distance, (0,0)), corners)
-    dists_tr = map(partial(distance, (img.width, 0)), corners)
+    dists_origin = list(map(partial(distance, (0,0)), corners))
+    dists_tr = list(map(partial(distance, (img.width, 0)), corners))
     return (corners[np.argmin(dists_origin)], 
             corners[np.argmin(dists_tr)], 
             corners[np.argmax(dists_origin)],
@@ -140,15 +140,15 @@ def process2():
     b.show()
 
     corners = find_corners(b, Color.ORANGE, circlet=.4)
-    print "shear"
+    print("shear")
     tl, tr, br, bl = clockwise_corners([blob.centroid() for blob in corners], b)
 #    fixed = b.shear([(0,0), (b.width, tl[1]-tr[1]), (b.width, b.height), (0, b.height)])
 #    fixed = b.shear([tl, (br[0], tl[1]), br, (tl[1], br[1])])
     fixed = b.warp([tl, (br[0], tl[1]), br, (tl[0], br[1])])
     fixed.show()
-    print "shear"
+    print("shear")
     new_corners = find_corners(fixed, Color.ORANGE, circlet=.4, radius=10)
-    print new_corners
+    print(new_corners)
     #boat = find_boat(fixed, Color.ORANGE, new_corners, circlet=.3, erode=1, radius=10)
     #draw_blobs(b, corners, boat)
     draw_blobs(fixed, new_corners, new_corners[0])

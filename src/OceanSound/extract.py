@@ -15,10 +15,10 @@ import os
 import numpy as np
 
 try:
-    import extract_pyhdf as extractor
+    from . import extract_pyhdf as extractor
 except ImportError:
     try:
-        import extract_gdal as extractor
+        from . import extract_gdal as extractor
     except ImportError:
         print("You must have installed pyhdf or gdal package")
 
